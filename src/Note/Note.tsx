@@ -2,12 +2,10 @@ import * as React from 'react';
 import './Note.scss';
 import { NoteData } from '../models/NoteData';
 
-export const Note: React.FC<NoteData> = ({ title, elements }) => (
+export const Note: React.FC<NoteData> = ({ title, description }) => (
   <div className="Note">
-    <h3 className="Title">{title}</h3>
-    <ul>
-      {elements.map((element) => <li>{element.content}</li>)}
-    </ul>
+    <h4 className="Title">{title}</h4>
+    <small className="Description text-muted">{description}</small>
   </div>
 );
 

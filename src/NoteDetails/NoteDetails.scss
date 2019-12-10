@@ -1,7 +1,4 @@
-.Note{
-
-  margin: 0;
-
+.NoteDetails{
   .Title {
     margin: 0;
   }
@@ -10,4 +7,7 @@
     margin: 0;
   }
 
+  .Content {
+    margin-top: 10px;
+  }
 }

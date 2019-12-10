@@ -6,23 +6,29 @@ export class NoteService {
     {
       id: 1,
       title: 'Lista de la Compra',
-      elements: [
-        { id: 1, content: 'fresas' },
-        { id: 2, content: 'nata' },
-        { id: 3, content: 'chocolate' },
-      ],
+      description: 'Nota para la lista de la compra',
+      content: '- fresas\n- nata\n- chocolate',
     },
     {
       id: 2,
       title: 'Cosas pendientes',
-      elements: [
-        { id: 1, content: 'fregar la loza' },
-        { id: 2, content: 'ir a comprar' },
-      ],
+      description: 'Nota para recordar las cosas por hacer',
+      content: '',
     },
   ];
 
   public getNotes(): Promise<NoteData[]> {
     return Promise.resolve(this.notesData);
+  }
+
+  public getNoteById(id: number): Promise<NoteData> {
+    return new Promise((resolve, reject) => {
+      const matchedNotes = this.notesData.find((note) => note.id === id);
+      if (matchedNotes) {
+        resolve(matchedNotes);
+      } else {
+        reject();
+      }
+    });
   }
 }
