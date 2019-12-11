@@ -1,0 +1,1 @@
+export { NoteResume } from './NoteResume';

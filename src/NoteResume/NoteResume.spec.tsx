@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { render, RenderResult } from '@testing-library/react';
-import { Note} from './';
+import { NoteResume} from './';
 
-describe('Note', () => {
+describe('NoteResume', () => {
   it('should display the default message', () => {
     const renderResult: RenderResult = render(
-      <Note/>,
+      <NoteResume/>,
     );
-    expect(renderResult.queryByText('Hello from Note!')).toBeTruthy();
+    expect(renderResult.queryByText('Hello from NoteResume!')).toBeTruthy();
   });
 });

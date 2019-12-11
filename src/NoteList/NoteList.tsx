@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './NoteList.scss';
-import { Note } from '../Note';
+import { NoteResume } from '../NoteResume';
 import { NoteData } from '../models/NoteData';
 import { Dependencies } from '../models/Dependencies';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ export const NoteList: React.FC<Dependencies> = ({ noteService }) => {
     return (
       <li key={note.id} className="list-group-item text-center">
         <Link to={`/notes/${note.id}`}>
-          <Note title={note.title} description={note.description} content={note.content}/>
+          <NoteResume title={note.title} description={note.description} content={note.content}/>
         </Link>
       </li>
     );

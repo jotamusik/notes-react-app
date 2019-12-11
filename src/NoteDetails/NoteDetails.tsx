@@ -2,9 +2,7 @@ import * as React from 'react';
 import './NoteDetails.scss';
 import { Dependencies } from '../models/Dependencies';
 import { NoteData } from '../models/NoteData';
-import { Link, useParams } from 'react-router-dom';
-import { Note } from '../Note';
-import { render } from 'react-dom';
+import { useParams } from 'react-router-dom';
 
 export const NoteDetails: React.FC<Dependencies> = ({ noteService }) => {
 
@@ -30,10 +28,19 @@ export const NoteDetails: React.FC<Dependencies> = ({ noteService }) => {
           <h2 className="Title">{noteDetails.title}</h2>
           <small className="Description text-muted">{noteDetails.description}</small>
           <br/>
-          <p className="Content">{noteDetails.content}</p>
+          {renderNoteContent(noteDetails.content)}
         </div>
       );
     }
+  }
+
+  function renderNoteContent(content: string) {
+    const paragraphs = content.split('\n');
+    return (
+      <div className="Content">
+        {paragraphs.map((paragraph) => <p className="Content-paragraph">{paragraph}</p>)}
+      </div>
+    );
   }
 
   return (
