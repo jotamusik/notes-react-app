@@ -5,7 +5,7 @@ import { NoteService } from './services/NoteService';
 import { Dependencies } from './models/Dependencies';
 import { NoteDetails } from './NoteDetails';
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 const App: React.FC = () => {
 
@@ -32,16 +32,10 @@ const App: React.FC = () => {
           <div className="col">
             <NoteList noteService={dependencies.noteService}/>
           </div>
-          <Route path="/notes/:noteId">
-            <div className="col-7">
-              <NoteDetails noteService={dependencies.noteService}/>
-            </div>
-          </Route>
-          <Route path="/notes/new">
-            <div className="col-7">
-              New Note
-            </div>
-          </Route>
+          <Switch>
+            <Route exact path="/notes/new" component={() => <div className="col-7">'New Note'</div> }/>
+            <Route path="/notes/:noteId" component={() => <NoteDetails noteService={dependencies.noteService}/>}/>
+          </Switch>
         </div>
       </div>
     </Router>

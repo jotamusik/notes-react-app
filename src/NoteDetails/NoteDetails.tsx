@@ -44,8 +44,10 @@ export const NoteDetails: React.FC<Dependencies> = ({ noteService }) => {
   }
 
   return (
-    <div className="NoteDetails">
-      {renderNoteDetails(note)}
+    <div className="col-7">
+      <div className="NoteDetails">
+        {renderNoteDetails(note)}
+      </div>
     </div>
   );
 };
