@@ -7,6 +7,13 @@ import { Link } from 'react-router-dom';
 
 export const NoteList: React.FC<Dependencies> = ({ noteService }) => {
 
+  const [notes, setNotes] = React.useState<NoteData[]>([]);
+
+  const onInit: React.DependencyList = [];
+  React.useEffect(() => {
+    noteService.getNotes().then(setNotes);
+  }, onInit);
+
   function renderNote(note: NoteData) {
     return (
       <li key={note.id} className="list-group-item text-center">
@@ -16,13 +23,6 @@ export const NoteList: React.FC<Dependencies> = ({ noteService }) => {
       </li>
     );
   }
-
-  const [notes, setNotes] = React.useState<NoteData[]>([]);
-
-  const onInit: React.DependencyList = [];
-  React.useEffect(() => {
-    noteService.getNotes().then(setNotes);
-  }, onInit);
 
   return (
     <div className="NoteList">
