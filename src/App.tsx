@@ -31,13 +31,13 @@ const App: React.FC = () => {
         </header>
         <div className="row">
           <div className="col">
-            <NoteList noteService={dependencies.noteService}/>
+            <NoteList noteService={ dependencies.noteService }/>
           </div>
           <Switch>
-            <Route exact path="/notes/new" component={() => <EditNote noteService={dependencies.noteService}/>}/>
+            <Route exact path="/notes/new" component={ () => <EditNote noteService={ dependencies.noteService }/> }/>
             <Route exact path="/notes/:noteId/edit"
-              component={() => <EditNote noteService={dependencies.noteService}/>}/>
-            <Route path="/notes/:noteId" component={() => <NoteDetails noteService={dependencies.noteService}/>}/>
+                   component={ () => <EditNote noteService={ dependencies.noteService }/> }/>
+            <Route path="/notes/:noteId" component={ () => <NoteDetails noteService={ dependencies.noteService }/> }/>
           </Switch>
         </div>
       </div>

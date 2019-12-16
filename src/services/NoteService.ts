@@ -23,9 +23,9 @@ export class NoteService {
 
   public getNoteById(id: number): Promise<NoteData> {
     return new Promise((resolve, reject) => {
-      const matchedNotes = this.notesData.find((note) => note.id === id);
-      if (matchedNotes) {
-        resolve(matchedNotes);
+      const matchedNote = this.notesData.find((note) => note.id === id);
+      if ( matchedNote ) {
+        resolve(matchedNote);
       } else {
         reject();
       }

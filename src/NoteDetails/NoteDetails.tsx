@@ -34,7 +34,7 @@ export const NoteDetails: React.FC<Dependencies> = ({ noteService }) => {
       return (
         <div className="card">
           <div className="card-body">
-            <h5 className="card-title">{noteDetails.title}</h5>
+            <h5 className="card-title">{ noteDetails.title }</h5>
             <h6 className="card-subtitle text-muted">{noteDetails.description}</h6>
             {renderNoteContent(noteDetails.content)}
             <Link to={`${match.url}/edit`}><a href="" className="btn btn-dark">Edit</a></Link>
