@@ -31,4 +31,17 @@ export class NoteService {
       }
     });
   }
+
+  public saveNote(noteToSave: NoteData): Promise<NoteData> {
+    return new Promise((resolve) => {
+      const noteIndex = this.notesData.findIndex((note) => note.id === noteToSave.id);
+      const isFound = noteIndex !== -1;
+      if (isFound) {
+        this.notesData[noteIndex] = noteToSave;
+      } else {
+        this.notesData.push(noteToSave);
+      }
+      resolve(noteToSave);
+    });
+  }
 }
