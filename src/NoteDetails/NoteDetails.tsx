@@ -4,10 +4,13 @@ import { Dependencies } from '../models/Dependencies';
 import { NoteData } from '../models/NoteData';
 import { useParams, Link, useRouteMatch } from 'react-router-dom';
 import { NoteService } from '../services/NoteService';
+import { useNotesContext } from '../LocalState';
 
 const useGetNote = (noteService: NoteService) => {
   const { noteId } = useParams();
   const match = useRouteMatch();
+
+  const { actions } = useNotesContext();
 
   const [note, setNote] = React.useState<NoteData>();
 
@@ -15,11 +18,21 @@ const useGetNote = (noteService: NoteService) => {
   const onNoteIdChange: React.DependencyList = [noteId];
 
   React.useEffect(() => {
-    noteService.getNoteById(Number(noteId)).then(setNote);
+    if ( actions.selectNote ) {
+      actions.selectNote(Number(noteId));
+    }
+    if ( actions.getNoteById ) {
+      actions.getNoteById(Number(noteId)).then(setNote);
+    }
   }, onInit);
 
   React.useEffect(() => {
-    noteService.getNoteById(Number(noteId)).then(setNote);
+    if ( actions.selectNote ) {
+      actions.selectNote(Number(noteId));
+    }
+    if ( actions.getNoteById ) {
+      actions.getNoteById(Number(noteId)).then(setNote);
+    }
   }, onNoteIdChange);
 
   return {note, match};

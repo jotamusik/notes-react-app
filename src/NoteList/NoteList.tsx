@@ -4,31 +4,28 @@ import { NoteResume } from '../NoteResume';
 import { NoteData } from '../models/NoteData';
 import { Dependencies } from '../models/Dependencies';
 import { Link } from 'react-router-dom';
+import { useNotesContext } from '../LocalState';
 
 export const NoteList: React.FC<Dependencies> = ({ noteService }) => {
 
-  const [ notes, setNotes ] = React.useState<NoteData[]>([]);
+  const { notes, selectedNoteId } = useNotesContext();
 
-  const onInit: React.DependencyList = [];
-  React.useEffect(() => {
-    noteService.getNotes().then(setNotes);
-  }, onInit);
+  const isActiveNote = (note: NoteData) => note.id === selectedNoteId;
 
   function renderNote(note: NoteData) {
     return (
-      <li key={ note.id } className="list-group-item text-center">
-        <Link to={ `/notes/${ note.id }` }>
-          <NoteResume title={ note.title } description={ note.description } content={ note.content }/>
-        </Link>
-      </li>
+      <Link to={ `/notes/${ note.id }` }
+            className={ `list-group-item text-center ${ isActiveNote(note) ? 'NoteList-ActiveItem' : '' }` }>
+        <NoteResume title={ note.title } description={ note.description } content={ note.content }/>
+      </Link>
     );
   }
 
   return (
     <div className="NoteList">
-      <ul className="list-group">
+      <div className="list-group">
         { notes.map(renderNote) }
-      </ul>
+      </div>
     </div>
   );
 };

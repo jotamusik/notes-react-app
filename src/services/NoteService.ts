@@ -36,9 +36,10 @@ export class NoteService {
     return new Promise((resolve) => {
       const noteIndex = this.notesData.findIndex((note) => note.id === noteToSave.id);
       const isFound = noteIndex !== -1;
-      if (isFound) {
+      if ( isFound ) {
         this.notesData[noteIndex] = noteToSave;
       } else {
+        noteToSave.id = this.notesData.length + 1;
         this.notesData.push(noteToSave);
       }
       resolve(noteToSave);

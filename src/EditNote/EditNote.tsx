@@ -2,7 +2,8 @@ import * as React from 'react';
 import './EditNote.scss';
 import { Dependencies } from '../models/Dependencies';
 import { NoteData } from '../models/NoteData';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { useNotesContext } from '../LocalState';
 
 export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
 
@@ -13,18 +14,26 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
   };
 
   const { noteId } = useParams();
+  const { actions } = useNotesContext();
+  const history = useHistory();
 
-  const [ note, setNote ] = React.useState<NoteData>(emptyNote);
   const [ editedNote, setEditedNote ] = React.useState<NoteData>(emptyNote);
 
   const onInit: React.DependencyList = [];
 
   React.useEffect(() => {
-    noteService.getNoteById(Number(noteId)).then((retrievedNote) => {
-      setNote(retrievedNote);
-      setEditedNote(retrievedNote);
-    });
+    if ( actions.selectNote ) {
+      actions.selectNote(Number(noteId));
+    }
+    if ( actions.getNoteById ) {
+      actions.getNoteById(Number(noteId)).then(setEditedNote);
+    }
+    return () => {
+      setEditedNote(emptyNote);
+    };
   }, onInit);
+
+  const redirectToNoteDetails = (id?: number) => history.push(`/notes/${id ? id : noteId}`);
 
   const handleTitleChange = (event: any) => {
     editedNote.title = event.target.value;
@@ -41,11 +50,23 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
     setEditedNote({ ...editedNote });
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    noteService.saveNote(editedNote).then((savedNote) => {
-      console.log(savedNote);
-    });
+    if ( actions.saveNote ) {
+      const savedNote = await actions.saveNote(editedNote);
+      redirectToNoteDetails(savedNote.id);
+    }
+  };
+
+  const handleDiscard = (event: any) => {
+    event.preventDefault();
+    redirectToNoteDetails();
+  };
+
+  const avoidSubmitOnEnter = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
   };
 
   const renderTitleForm = (title?: string) => (
@@ -57,7 +78,8 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
         id="title"
         name="title"
         value={ title }
-        onChange={ handleTitleChange }/>
+        onChange={ handleTitleChange }
+        onKeyPress={avoidSubmitOnEnter} />
     </div>
   );
 
@@ -70,7 +92,8 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
         id="description"
         name="description"
         value={ description }
-        onChange={ handleDescriptionChange }/>
+        onChange={ handleDescriptionChange }
+        onKeyPress={avoidSubmitOnEnter}/>
     </div>
   );
 
@@ -100,7 +123,7 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
           </div>
           <div className="form-row EditNote-buttons-row">
             <button type="submit" className="btn btn-success EditNote-button">Save</button>
-            <button type="button" className="btn btn-danger EditNote-button">Discard</button>
+            <button type="button" className="btn btn-danger EditNote-button" onClick={handleDiscard}>Discard</button>
           </div>
         </form>
       </div>
