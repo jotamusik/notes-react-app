@@ -2,11 +2,10 @@ import * as React from 'react';
 import './NoteList.scss';
 import { NoteResume } from '../NoteResume';
 import { NoteData } from '../models/NoteData';
-import { Dependencies } from '../models/Dependencies';
 import { Link } from 'react-router-dom';
 import { useNotesContext } from '../LocalState';
 
-export const NoteList: React.FC<Dependencies> = ({ noteService }) => {
+export const NoteList: React.FC = () => {
 
   const { notes, selectedNoteId } = useNotesContext();
 
@@ -16,7 +15,7 @@ export const NoteList: React.FC<Dependencies> = ({ noteService }) => {
     return (
       <Link to={ `/notes/${ note.id }` }
             className={ `list-group-item text-center ${ isActiveNote(note) ? 'NoteList-ActiveItem' : '' }` }>
-        <NoteResume title={ note.title } description={ note.description } content={ note.content }/>
+        <NoteResume title={ note.title } description={ note.description } content={ note.content } />
       </Link>
     );
   }

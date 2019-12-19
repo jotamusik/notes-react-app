@@ -1,11 +1,10 @@
 import * as React from 'react';
 import './EditNote.scss';
-import { Dependencies } from '../models/Dependencies';
 import { NoteData } from '../models/NoteData';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useNotesContext } from '../LocalState';
 
-export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
+export const EditNote: React.FC = () => {
 
   const emptyNote = {
     title: '',
@@ -33,7 +32,7 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
     };
   }, onInit);
 
-  const redirectToNoteDetails = (id?: number) => history.push(`/notes/${id ? id : noteId}`);
+  const redirectToNoteDetails = (id?: number) => history.push(`/notes/${ id ? id : noteId }`);
 
   const handleTitleChange = (event: any) => {
     editedNote.title = event.target.value;
@@ -64,7 +63,7 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
   };
 
   const avoidSubmitOnEnter = (event: any) => {
-    if (event.key === 'Enter') {
+    if ( event.key === 'Enter' ) {
       event.preventDefault();
     }
   };
@@ -79,7 +78,7 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
         name="title"
         value={ title }
         onChange={ handleTitleChange }
-        onKeyPress={avoidSubmitOnEnter} />
+        onKeyPress={ avoidSubmitOnEnter } />
     </div>
   );
 
@@ -93,7 +92,7 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
         name="description"
         value={ description }
         onChange={ handleDescriptionChange }
-        onKeyPress={avoidSubmitOnEnter}/>
+        onKeyPress={ avoidSubmitOnEnter } />
     </div>
   );
 
@@ -123,7 +122,7 @@ export const EditNote: React.FC<Dependencies> = ({ noteService }) => {
           </div>
           <div className="form-row EditNote-buttons-row">
             <button type="submit" className="btn btn-success EditNote-button">Save</button>
-            <button type="button" className="btn btn-danger EditNote-button" onClick={handleDiscard}>Discard</button>
+            <button type="button" className="btn btn-danger EditNote-button" onClick={ handleDiscard }>Discard</button>
           </div>
         </form>
       </div>

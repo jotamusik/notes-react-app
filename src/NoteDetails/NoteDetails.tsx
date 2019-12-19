@@ -1,21 +1,19 @@
 import * as React from 'react';
 import './NoteDetails.scss';
-import { Dependencies } from '../models/Dependencies';
 import { NoteData } from '../models/NoteData';
-import { useParams, Link, useRouteMatch } from 'react-router-dom';
-import { NoteService } from '../services/NoteService';
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import { useNotesContext } from '../LocalState';
 
-const useGetNote = (noteService: NoteService) => {
+const useGetNote = () => {
   const { noteId } = useParams();
   const match = useRouteMatch();
 
   const { actions } = useNotesContext();
 
-  const [note, setNote] = React.useState<NoteData>();
+  const [ note, setNote ] = React.useState<NoteData>();
 
   const onInit: React.DependencyList = [];
-  const onNoteIdChange: React.DependencyList = [noteId];
+  const onNoteIdChange: React.DependencyList = [ noteId ];
 
   React.useEffect(() => {
     if ( actions.selectNote ) {
@@ -35,22 +33,22 @@ const useGetNote = (noteService: NoteService) => {
     }
   }, onNoteIdChange);
 
-  return {note, match};
+  return { note, match };
 };
 
-export const NoteDetails: React.FC<Dependencies> = ({ noteService }) => {
+export const NoteDetails: React.FC = () => {
 
-  const {note, match} = useGetNote(noteService);
+  const { note, match } = useGetNote();
 
   function renderNoteDetails(noteDetails?: NoteData) {
-    if (noteDetails) {
+    if ( noteDetails ) {
       return (
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">{ noteDetails.title }</h5>
-            <h6 className="card-subtitle text-muted">{noteDetails.description}</h6>
-            {renderNoteContent(noteDetails.content)}
-            <Link to={`${match.url}/edit`}><a href="" className="btn btn-dark">Edit</a></Link>
+            <h6 className="card-subtitle text-muted">{ noteDetails.description }</h6>
+            { renderNoteContent(noteDetails.content) }
+            <Link to={ `${ match.url }/edit` }><a href="" className="btn btn-dark">Edit</a></Link>
           </div>
         </div>
       );
@@ -61,7 +59,7 @@ export const NoteDetails: React.FC<Dependencies> = ({ noteService }) => {
     const paragraphs = content.split('\n');
     return (
       <div className="Content">
-        {paragraphs.map((paragraph) => <p className="card-text">{paragraph}</p>)}
+        { paragraphs.map((paragraph) => <p className="card-text">{ paragraph }</p>) }
       </div>
     );
   }
@@ -69,7 +67,7 @@ export const NoteDetails: React.FC<Dependencies> = ({ noteService }) => {
   return (
     <div className="col-7">
       <div className="NoteDetails">
-        {renderNoteDetails(note)}
+        { renderNoteDetails(note) }
       </div>
     </div>
   );

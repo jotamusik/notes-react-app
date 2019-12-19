@@ -5,7 +5,7 @@ import { NoteService } from './services/NoteService';
 import { Dependencies } from './models/Dependencies';
 import { NoteDetails } from './NoteDetails';
 
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { EditNote } from './EditNote';
 import { NotesStateProvider } from './LocalState';
 
@@ -35,13 +35,13 @@ const App: React.FC = () => {
           </header>
           <div className="row">
             <div className="col">
-              <NoteList noteService={ dependencies.noteService }/>
+              <NoteList />
             </div>
             <Switch>
-              <Route exact path="/notes/new" component={ () => <EditNote noteService={ dependencies.noteService }/> }/>
+              <Route exact path="/notes/new" component={ () => <EditNote /> } />
               <Route exact path="/notes/:noteId/edit"
-                     component={ () => <EditNote noteService={ dependencies.noteService }/> }/>
-              <Route path="/notes/:noteId" component={ () => <NoteDetails noteService={ dependencies.noteService }/> }/>
+                     component={ () => <EditNote /> } />
+              <Route path="/notes/:noteId" component={ () => <NoteDetails /> } />
             </Switch>
           </div>
         </div>
